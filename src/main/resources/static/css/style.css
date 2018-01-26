@@ -5,3 +5,8 @@
 .bottom-padding {
 	padding-bottom: 25px;
 }
+
+.result-frame {
+	background-color: white;
+	padding: 5px;
+}

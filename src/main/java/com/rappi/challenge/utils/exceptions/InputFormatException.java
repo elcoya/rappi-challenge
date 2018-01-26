@@ -23,5 +23,9 @@ public class InputFormatException extends RuntimeException {
 	public String getDetails() {
 		return details;
 	}
-	
+
+	@Override
+	public String getMessage() {
+		return String.format("Line %d: %s", this.line+1, this.details);
+	}
 }

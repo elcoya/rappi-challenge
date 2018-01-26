@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.rappi.challenge.model.CubeTestCasesSet;
 import com.rappi.challenge.utils.RawInputParser;
+import com.rappi.challenge.utils.exceptions.InputFormatException;
 
 @Service
 public class CubeSummationService {
@@ -13,8 +14,12 @@ public class CubeSummationService {
 	private RawInputParser inputParser;
 	
 	public String solveInput(String input) {
-		CubeTestCasesSet testCasesSet = inputParser.parseInput(input);
-		return testCasesSet.execute();
+		try {
+			CubeTestCasesSet testCasesSet = inputParser.parseInput(input);
+			return testCasesSet.execute();
+		} catch (InputFormatException e) {
+			return e.getMessage();
+		}
 	}
 	
 }

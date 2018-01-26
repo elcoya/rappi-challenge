@@ -17,6 +17,8 @@ import com.rappi.challenge.services.CubeSummationService;
 @Controller
 public class CubeSummationController {
 	
+	private static final String INPUT_KEY = "intake";
+	
 	@Autowired
 	private CubeSummationService cubeSummationService;
 	
@@ -26,14 +28,15 @@ public class CubeSummationController {
 	}
 
 	@RequestMapping(value = "/cube", method = RequestMethod.POST)
-	public String post(@RequestBody MultiValueMap<String,String> formData) {
-		for (Entry<String, List<String>> pieceOfData : formData.entrySet()) {
-			System.out.println("Key: " + pieceOfData.getKey());
-			System.out.println("Values: ");
-			for (String item : pieceOfData.getValue()) {
-				System.out.println(item);
-			}
-		}
+	public String post(@RequestBody MultiValueMap<String,String> formData, Model model) {
+		List<String> inputValue = formData.get(INPUT_KEY);
+
+		String rawInput = inputValue.get(0);
+		model.addAttribute("input", rawInput);
+		
+		String output = cubeSummationService.solveInput(rawInput);
+		model.addAttribute("output", output);
+		
 		return "cube-out";
 	}
 
