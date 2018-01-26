@@ -22,7 +22,7 @@ public class Cube {
 		this.matrix = new int[size][size][size]; // Is automatically initialized with zeros
 	}
 
-	private void validateCoordinates(int x, int y, int z) {
+	public void validateCoordinates(int x, int y, int z) {
 		if (x < 1 || x > this.size ||
 			y < 1 || y > this.size ||
 			z < 1 || z > this.size) {
@@ -40,4 +40,19 @@ public class Cube {
 		this.matrix[x-1][y-1][z-1] = value; // Cube Coordinates starts @ 1
 	}
 	
+	public int sumRange(int x1, int y1, int z1, int x2, int y2, int z2) {
+		validateCoordinates(x1, y1, z1);
+		validateCoordinates(x2, y2, z2);
+
+		int sum = 0;
+		for (int i = x1 - 1; i < x2; i++) {
+			for (int j = y1 - 1; j < y2; j++) {
+				for (int k = z1 - 1; k < z2; k++) {
+					sum += this.matrix[i][j][k];
+				}
+			}
+		}
+
+		return sum;
+	}
 }
