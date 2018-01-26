@@ -1,6 +1,7 @@
 package com.rappi.challenge.model;
 
 import com.rappi.challenge.model.exceptions.CoordinateOutOfBoundsException;
+import com.rappi.challenge.model.exceptions.MalformedRangeException;
 import com.rappi.challenge.model.exceptions.SizeTooHighException;
 import com.rappi.challenge.model.exceptions.SizeTooLowException;
 
@@ -21,12 +22,18 @@ public class Cube {
 		this.size = size;
 		this.matrix = new int[size][size][size]; // Is automatically initialized with zeros
 	}
-
+	
 	public void validateCoordinates(int x, int y, int z) {
 		if (x < 1 || x > this.size ||
-			y < 1 || y > this.size ||
-			z < 1 || z > this.size) {
+				y < 1 || y > this.size ||
+				z < 1 || z > this.size) {
 			throw new CoordinateOutOfBoundsException();
+		}
+	}
+
+	public void validateRange(int x1, int y1, int z1, int x2, int y2, int z2) {
+		if (x1 > x2 || y1 > y2 || z1 > z2) {
+			throw new MalformedRangeException();
 		}
 	}
 	
@@ -43,7 +50,8 @@ public class Cube {
 	public int sumRange(int x1, int y1, int z1, int x2, int y2, int z2) {
 		validateCoordinates(x1, y1, z1);
 		validateCoordinates(x2, y2, z2);
-
+		validateRange(x1, y1, z1, x2, y2, z2);
+		
 		int sum = 0;
 		for (int i = x1 - 1; i < x2; i++) {
 			for (int j = y1 - 1; j < y2; j++) {

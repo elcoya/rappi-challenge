@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.rappi.challenge.model.exceptions.CoordinateOutOfBoundsException;
+import com.rappi.challenge.model.exceptions.MalformedRangeException;
 import com.rappi.challenge.model.exceptions.SizeTooHighException;
 import com.rappi.challenge.model.exceptions.SizeTooLowException;
 
@@ -179,7 +180,25 @@ public class CubeTest {
 		
 		assertEquals(c * CELL_VALUE, cube.sumRange(1, 1, 1, DEFAULT_CUBE_SIZE, DEFAULT_CUBE_SIZE, DEFAULT_CUBE_SIZE));
 	}
+	
+	@Test(expected = MalformedRangeException.class)
+	public void testSumRangeForMalformedRangeX() {
+		Cube cube = new Cube(DEFAULT_CUBE_SIZE);
+		cube.sumRange(DEFAULT_CUBE_SIZE, 1, 1, 1, DEFAULT_CUBE_SIZE, DEFAULT_CUBE_SIZE);
+	}
+	
+	@Test(expected = MalformedRangeException.class)
+	public void testSumRangeForMalformedRangeY() {
+		Cube cube = new Cube(DEFAULT_CUBE_SIZE);
+		cube.sumRange(1, DEFAULT_CUBE_SIZE, 1, DEFAULT_CUBE_SIZE, 1, DEFAULT_CUBE_SIZE);
+	}
 
+	@Test(expected = MalformedRangeException.class)
+	public void testSumRangeForMalformedRangeZ() {
+		Cube cube = new Cube(DEFAULT_CUBE_SIZE);
+		cube.sumRange(1, 1, DEFAULT_CUBE_SIZE, DEFAULT_CUBE_SIZE, DEFAULT_CUBE_SIZE, 1);
+	}
+	
 	
 
 	@Test(expected = CoordinateOutOfBoundsException.class)
